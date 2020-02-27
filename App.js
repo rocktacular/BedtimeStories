@@ -13,10 +13,12 @@ import {View, Text} from 'react-native';
 
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
+import {enableScreens} from 'react-native-screens';
 
 import About from './screens/About';
 import Home from './screens/Home';
 
+enableScreens();
 const Stack = createStackNavigator();
 
 const Test = () => {
