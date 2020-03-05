@@ -6,7 +6,9 @@ import {
   TextInput,
   FlatList,
   TouchableWithoutFeedback,
+  StyleSheet,
 } from 'react-native';
+import ScreenContainer from '../components/ScreenContainer';
 
 import OpenLibraryService from '../services/OpenLibraryService';
 
@@ -42,12 +44,15 @@ const Search = ({navigation}) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [searchCategory, setSearchCategory] = useState('title');
   const [results, setResults] = useState([]);
+  const [loadingSearch, setLoadingSearch] = useState(false);
 
   // HANDLERS
   const search = (query, category) => {
+    setLoadingSearch(true);
     OpenLibraryService.search(query, category).then(results => {
       console.log('results', results);
       setResults(results);
+      setLoadingSearch(false);
     });
   };
   const onTextChange = () => str => {
@@ -57,7 +62,7 @@ const Search = ({navigation}) => {
     setSearchCategory(setVal);
   };
   return (
-    <>
+    <ScreenContainer loading={loadingSearch}>
       <Text>Search</Text>
       <TextInput
         style={{width: 100, height: 20, backgroundColor: 'white'}}
@@ -75,8 +80,10 @@ const Search = ({navigation}) => {
         data={results}
         renderItem={({item}) => <Result book={item} />}
       />
-    </>
+    </ScreenContainer>
   );
 };
+
+const styles = StyleSheet.create({});
 
 export default Search;
