@@ -2,13 +2,14 @@ import React, {useState} from 'react';
 import {
   View,
   Button,
-  Text,
-  TextInput,
   FlatList,
   TouchableWithoutFeedback,
   StyleSheet,
 } from 'react-native';
 import ScreenContainer from '../components/ScreenContainer';
+import MyText from '../components/MyText';
+import MyTextInput from '../components/MyTextInput';
+import MyButton from '../components/MyButton';
 
 import OpenLibraryService from '../services/OpenLibraryService';
 
@@ -18,9 +19,9 @@ const Result = ({book}) => {
   if (!book.title || !book.author_name) return null;
   return (
     <View>
-      <Text>
+      <MyText>
         {book.title} ({book.author_name && book.author_name[0]})
-      </Text>
+      </MyText>
     </View>
   );
 };
@@ -30,10 +31,10 @@ const CategorySelect = ({category, setCategory}) => {
   return (
     <View>
       <TouchableWithoutFeedback onPress={() => setCategory('author')}>
-        <Text>Author {category === 'author' ? 'X' : null}</Text>
+        <MyText>Author {category === 'author' ? 'X' : null}</MyText>
       </TouchableWithoutFeedback>
       <TouchableWithoutFeedback onPress={() => setCategory('title')}>
-        <Text>Title {category === 'title' ? 'X' : null}</Text>
+        <MyText>Title {category === 'title' ? 'X' : null}</MyText>
       </TouchableWithoutFeedback>
     </View>
   );
@@ -63,16 +64,12 @@ const Search = ({navigation}) => {
   };
   return (
     <ScreenContainer loading={loadingSearch}>
-      <Text>Search</Text>
-      <TextInput
-        style={{width: 100, height: 20, backgroundColor: 'white'}}
-        onChangeText={onTextChange()}
-      />
       <CategorySelect
         category={searchCategory}
         setCategory={onCategoryChange()}
       />
-      <Button
+      <MyTextInput onTextChange={onTextChange} />
+      <MyButton
         title="Search"
         onPress={() => search(searchTerm, searchCategory)}
       />

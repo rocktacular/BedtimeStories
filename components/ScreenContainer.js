@@ -1,5 +1,6 @@
 import React from 'react';
 import {StyleSheet, View, Text} from 'react-native';
+import Colors from '../Colors';
 
 const ScreenContainer = ({children, loading}) => {
   return (
@@ -17,8 +18,10 @@ const ScreenContainer = ({children, loading}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#cccccc',
+    backgroundColor: Colors.primary,
     position: 'relative',
+    paddingVertical: 20,
+    paddingHorizontal: 10,
   },
   loadingContainer: {
     position: 'absolute',
@@ -27,7 +30,6 @@ const styles = StyleSheet.create({
     right: 0,
     bottom: 0,
     opacity: 0.5,
-    backgroundColor: '#800080',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
