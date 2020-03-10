@@ -1,15 +1,10 @@
 import React, {useState} from 'react';
-import {
-  View,
-  Button,
-  FlatList,
-  TouchableWithoutFeedback,
-  StyleSheet,
-} from 'react-native';
+import {View, FlatList, StyleSheet} from 'react-native';
 import ScreenContainer from '../components/ScreenContainer';
 import MyText from '../components/MyText';
 import MyTextInput from '../components/MyTextInput';
 import MyButton from '../components/MyButton';
+import CategorySelect from '../components/CategorySelect';
 
 import OpenLibraryService from '../services/OpenLibraryService';
 
@@ -26,30 +21,19 @@ const Result = ({book}) => {
   );
 };
 
-// Make own component
-const CategorySelect = ({category, setCategory}) => {
-  return (
-    <View>
-      <TouchableWithoutFeedback onPress={() => setCategory('author')}>
-        <MyText>Author {category === 'author' ? 'X' : null}</MyText>
-      </TouchableWithoutFeedback>
-      <TouchableWithoutFeedback onPress={() => setCategory('title')}>
-        <MyText>Title {category === 'title' ? 'X' : null}</MyText>
-      </TouchableWithoutFeedback>
-    </View>
-  );
-};
+const categories = ['Author', 'Title'];
 
 const Search = ({navigation}) => {
   // STATE
   const [searchTerm, setSearchTerm] = useState('');
-  const [searchCategory, setSearchCategory] = useState('title');
+  const [searchCategory, setSearchCategory] = useState(1);
   const [results, setResults] = useState([]);
   const [loadingSearch, setLoadingSearch] = useState(false);
 
   // HANDLERS
-  const search = (query, category) => {
+  const search = (query, categoryIndex) => {
     setLoadingSearch(true);
+    const category = categories[categoryIndex].toLowerCase();
     OpenLibraryService.search(query, category).then(results => {
       console.log('results', results);
       setResults(results);
@@ -65,7 +49,8 @@ const Search = ({navigation}) => {
   return (
     <ScreenContainer loading={loadingSearch}>
       <CategorySelect
-        category={searchCategory}
+        active={searchCategory}
+        categories={categories}
         setCategory={onCategoryChange()}
       />
       <MyTextInput onTextChange={onTextChange} />
