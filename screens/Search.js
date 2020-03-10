@@ -1,25 +1,12 @@
 import React, {useState} from 'react';
 import {View, FlatList, StyleSheet} from 'react-native';
 import ScreenContainer from '../components/ScreenContainer';
-import MyText from '../components/MyText';
 import MyTextInput from '../components/MyTextInput';
 import MyButton from '../components/MyButton';
 import CategorySelect from '../components/CategorySelect';
+import BookCard from '../components/BookCard';
 
 import OpenLibraryService from '../services/OpenLibraryService';
-
-// Make own component
-const Result = ({book}) => {
-  // only render if title and author
-  if (!book.title || !book.author_name) return null;
-  return (
-    <View>
-      <MyText>
-        {book.title} ({book.author_name && book.author_name[0]})
-      </MyText>
-    </View>
-  );
-};
 
 const categories = ['Author', 'Title'];
 
@@ -46,6 +33,8 @@ const Search = ({navigation}) => {
   const onCategoryChange = () => setVal => {
     setSearchCategory(setVal);
   };
+
+  // RENDER
   return (
     <ScreenContainer loading={loadingSearch}>
       <CategorySelect
@@ -60,7 +49,7 @@ const Search = ({navigation}) => {
       />
       <FlatList
         data={results}
-        renderItem={({item}) => <Result book={item} />}
+        renderItem={({item}) => <BookCard book={item} />}
       />
     </ScreenContainer>
   );
